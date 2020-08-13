@@ -1,0 +1,28 @@
+---
+- name: "Configuring the ec2 instance"
+  hosts: localhost
+  become: true
+  connection: local
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: "Launching an ec2 instance"
+      ec2:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        image: ami-0d1cd67c26f5fca19
+        instance_type: t2.micro
+        count: 1
+        region: us-east-2
+        vpc_subnet_id: subnet-29e63245
+        key_name: mykey
+        group: default
+        assign_public_ip: yes
+        wait: yes
+        tags:
+          Name: Webserver
+  register: ec2 
+        
+
+
+
